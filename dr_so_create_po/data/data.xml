@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record forcecreate="True" id="decimal_product_vendor_price" model="decimal.precision">
+        <field name="name">Product Vendor Price</field>
+        <field name="digits">3</field>
+    </record>
+
+</odoo>

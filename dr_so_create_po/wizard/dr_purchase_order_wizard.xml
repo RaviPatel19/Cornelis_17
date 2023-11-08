@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dr_purchase_order_wizard_view_form" model="ir.ui.view">
+        <field name="name">dr.purchase.order.wizard.view.form</field>
+        <field name="model">dr.purchase.order.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order">
+                <header>
+                    <button string="Reserve Max" name="action_reserve_max" type="object"/>
+                </header>
+                <field name="purchase_order_line_ids">
+                    <tree create="0" delete="0" editable="bottom" decoration-bf="order_qty!=0">
+                        <field name="is_order_line" string=" " width="0.1"/>
+                        <field name="product_id" readonly="1" force_save="1"/>
+                        <field name="name" readonly="1" force_save="1"/>
+                        <field name="product_uom" readonly="1" force_save="1"/>
+                        <field name="product_uom_qty" readonly="1" force_save="1"/>
+                        <field name="reserved_qty" readonly="1" force_save="1"/>
+                        <field name="order_qty"/>
+                        <field name="supplier_id" context="{'res_partner_search_mode': 'supplier'}"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_create_purchase_order" string="Create Purchase Orders" type="object" class="btn-primary"/>
+                    <button name="action_create_extra_purchase_order" string="Create Extra PO" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="dr_purchase_order_wizard_action" model="ir.actions.act_window">
+        <field name="name">Order to Suppliers</field>
+        <field name="res_model">dr.purchase.order.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

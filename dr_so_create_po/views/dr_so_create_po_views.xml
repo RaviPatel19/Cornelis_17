@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_dr_so_create_po" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[last()]" position="after">
+                <button type="action" name="%(dr_so_create_po.dr_purchase_order_wizard_action)d" class="btn-primary" string="Order to Suppliers" invisible="state == 'sale'"/>
+            </xpath>
+            <xpath expr="//button[@name='action_preview_sale_order']" position="after">
+                <!-- <button name="action_view_purchase_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart icon" attrs="{'invisible': ['|', ('state', '!=', 'sale'), ('dr_purchase_order_count', '&lt;', 1)]}"> -->
+                <button name="action_view_purchase_orders" type="object" class="oe_stat_button" icon="fa-shopping-cart icon" invisible="state != 'sale' or dr_purchase_order_count &lt; 1">
+                    <field name="dr_purchase_order_count" widget="statinfo" string="Purchased"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="view_order_form_inherit_sale_stock_qty_inherit_dr_so_create_po" model="ir.ui.view">
+        <field name="name">sale.order.line.tree.sale.stock.qty.inherit.dr.so.create.po</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock_qty"/>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <xpath expr="//widget[@name='qty_at_date_widget']" position="after">
+                <widget name="dr_reserved_widget" width="0.1"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="purchase_order_form_inherit_dr_so_create_po" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <!-- <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" attrs="{'invisible': [('dr_sale_order_id', '=', False)]}"> -->
+                <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" invisible="dr_sale_order_id == False">
+                    Sale Order
+                    <field name="dr_sale_order_id" invisible="1" />
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="dr_is_extra_po" />
+                <!-- <field name="dr_sale_order_id" attrs="{'invisible': [('dr_is_extra_po', '=', False)], 'required': [('dr_is_extra_po', '=', True)]}" /> -->
+                <field name="dr_sale_order_id" invisible="'dr_is_extra_po' == False" required="dr_is_extra_po == True" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_inherit_dr_so_create_po" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <!-- <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" attrs="{'invisible': [('dr_po_from_so_id', '=', False)]}"> -->
+                <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" invisible="dr_po_from_so_id == False">
+                    Sale Order
+                    <field name="dr_po_from_so_id" invisible="1" />
+                </button>
+                <!-- <button name="action_view_td_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" attrs="{'invisible': [('sale_id', '=', False)]}"> -->
+                <button name="action_view_td_sale_order" type="object" class="oe_stat_button" icon="fa-usd icon" invisible="sale_id == False">
+                    Sale Order
+                    <field name="sale_id" invisible="1" />
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

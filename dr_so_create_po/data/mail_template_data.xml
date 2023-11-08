@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase.email_template_edi_purchase_done" model="mail.template">
+        <field name="subject">${object.company_id.name} Order (Ref ${object.name or 'n/a' }${object.dr_sale_order_id and ' - %s' % object.dr_sale_order_id.name or ''}${object.dr_sale_order_id.partner_id and ', %s' % object.dr_sale_order_id.partner_id.name or ''})</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear ${object.partner_id.name}
+        % if object.partner_id.parent_id:
+            (${object.partner_id.parent_id.name})
+        % endif
+        <br/><br/>
+        Here is in attachment a purchase order <strong>${object.name}</strong>.
+        <br/><br/>
+        Gelieve onze referentie te vermelden op uw factuur.
+        <br/><br/>
+        If you have any questions, please do not hesitate to contact us.
+        <br/><br/>
+        Best regards,
+    </p>
+</div></field>
+    </record>
+
+</odoo>
