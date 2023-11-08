@@ -55,8 +55,8 @@ class PurchaseOrderLine(models.Model):
             res[0]['description_picking'] = self.name
         return res
 
-    @api.onchange('product_qty', 'product_uom')
-    def _onchange_quantity(self):
-        super(PurchaseOrderLine, self)._onchange_quantity()
+    @api.onchange('product_qty', 'product_uom', 'company_id')
+    def _compute_price_unit_and_date_planned_and_name(self):
+        super(PurchaseOrderLine, self)._compute_price_unit_and_date_planned_and_name()
         if not self.price_unit:
             self.price_unit = self.product_id.standard_price
