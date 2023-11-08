@@ -35,7 +35,7 @@ class PurchaseOrderWizard(models.TransientModel):
         # Run Check Availability
         for picking in self.sale_order_id.picking_ids:
             picking.filtered(lambda p: p.state == 'draft').action_confirm()
-            moves = picking.mapped('move_lines').filtered(lambda move: move.state not in ('draft', 'cancel', 'done'))
+            moves = picking.mapped('move_ids').filtered(lambda move: move.state not in ('draft', 'cancel', 'done'))
             if moves:
                 package_level_done = picking.mapped('package_level_ids').filtered(lambda pl: pl.is_done and pl.state == 'confirmed')
                 package_level_done.write({'is_done': False})
@@ -44,7 +44,7 @@ class PurchaseOrderWizard(models.TransientModel):
 
         # Compute Reserved Qty
         for line in self.purchase_order_line_ids:
-            reserved_qty = sum(self.sale_order_id.picking_ids.move_lines.filtered(lambda x: x.product_id.id == line.product_id.id).mapped('reserved_availability'))
+            reserved_qty = sum(self.sale_order_id.picking_ids.move_ids.filtered(lambda x: x.product_id.id == line.product_id.id).mapped('availability'))
             line.reserved_qty = reserved_qty
             line.order_qty = line.product_uom_qty - reserved_qty
 

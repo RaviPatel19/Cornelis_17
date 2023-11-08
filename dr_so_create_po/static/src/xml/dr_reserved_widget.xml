@@ -1,6 +1,6 @@
 <templates>
 
-    <div t-name="dr_so_create_po.ReservedWidget">
+    <!-- <div t-name="dr_so_create_po.ReservedWidget">
         <div t-att-class="widget.data.state == 'sale' ? '' : 'd-none'">
             <t t-if="!widget.data.dr_reserved_qty">
                 <a tabindex="0" class="fa fa-info-circle text-danger"/>
@@ -24,6 +24,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 
 </templates>

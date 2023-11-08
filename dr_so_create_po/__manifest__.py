@@ -19,6 +19,7 @@
     ],
     # 'assets': {
     #     'web.assets_backend': [
-    #         'static/src/xml/dr_reserved_widget.xml',
+    #         'dr_so_create_po/static/src/**/*',
     #     ]
+    # }
 }
